@@ -1,6 +1,6 @@
 # FALSE
 
-# False Negative Samples Aware Contrastive Learning for Semantic Segmentation of High-Resolution Remote Sensing Image
+## False Negative Samples Aware Contrastive Learning for Semantic Segmentation of High-Resolution Remote Sensing Image
 
 This is a PyTorch implementation of the [FALSE](https://ieeexplore.ieee.org/document/9954056)
 > arXiv preprint: [arXiV 2211.07928](https://arxiv.org/abs/2211.07928)
@@ -17,7 +17,7 @@ The code and pre-trained models will be uploaded soon.
 
 
 ## Acknowledgement
-We would like to thank the [VISSL](https://github.com/facebookresearch/vissl) and [MMSegmentation](https://github.com/open-mmlab/mmsegmentation) for its self-supervised project.
+We would like to thank the [VISSL](https://github.com/facebookresearch/vissl) and [MMSegmentation](https://github.com/open-mmlab/mmsegmentation) for its open-source project.
 
 ## Citation
 If our repo is useful to you, please cite our published paper as follow:
