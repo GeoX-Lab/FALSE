@@ -2,6 +2,8 @@
 
 ## False Negative Samples Aware Contrastive Learning for Semantic Segmentation of High-Resolution Remote Sensing Image
 
+<img src="FALSE.png" width="900"/>
+
 This is a PyTorch implementation of the [FALSE](https://ieeexplore.ieee.org/document/9954056)
 > arXiv preprint: [arXiV 2211.07928](https://arxiv.org/abs/2211.07928)
 
