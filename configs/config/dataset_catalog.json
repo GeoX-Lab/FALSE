@@ -1,0 +1,14 @@
+{
+    "potsdam":{
+        "train":["/home/csu/HNS_Working/NewWork/potsdam/vissl_image"," "],
+        "val":["/home/csu/HNS_Working/NewWork/potsdam/val"," "]
+    },
+    "xiangtan":{
+        "train":["/home/csu/xiangtan/vissl_image"," "],
+        "val":["/home/csu/xiangtan/val"," "]
+    },
+    "dglc_local":{
+        "train":["/home/csu/dglc/vissl_image"," "],
+        "val":["/home/csu/dglc/val"," "]
+    }
+}
