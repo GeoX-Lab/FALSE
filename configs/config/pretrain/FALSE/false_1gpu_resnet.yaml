@@ -10,11 +10,11 @@ config:
   PERF_STAT_FREQUENCY: 10
   ROLLING_BTIME_FREQ: 5
   DATA:
-    NUM_DATALOADER_WORKERS: 2
+    NUM_DATALOADER_WORKERS: 32
     TRAIN:
       DATA_SOURCES: [disk_folder]
       DATASET_NAMES: ["potsdam"]
-      BATCHSIZE_PER_REPLICA: 2
+      BATCHSIZE_PER_REPLICA: 256
       LABEL_TYPE: sample_index    # just an implementation detail. Label isn't used
       TRANSFORMS:
         - name: ImgReplicatePil
