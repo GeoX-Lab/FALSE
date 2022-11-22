@@ -19,6 +19,12 @@ Plese refer to [INSTALL.md](docs/INSTALL.md) for installation and dataset prepar
 ```bash
 python tools/run_distributed_engines.py config=pretrain/FALSE/false_1gpu_resnet.yaml
 ``` 
+### 3. Set Confidence Weight $\alpha$
+The default confidence weight is 1, you can change it to other value ($0<\alpha<1$) , e.g. set to 0.9:
+```
+python tools/run_distributed_engines.py config=pretrain/FALSE/false_1gpu_resnet.yaml \
+    config.LOSS.false_loss.confidence_weight=0.9
+```
 
 ## Fine-tuning for semantic segmentation
 
