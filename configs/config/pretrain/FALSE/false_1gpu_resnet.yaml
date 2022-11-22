@@ -13,7 +13,7 @@ config:
     NUM_DATALOADER_WORKERS: 32
     TRAIN:
       DATA_SOURCES: [disk_folder]
-      DATASET_NAMES: ["potsdam"]
+      DATASET_NAMES: ["potsdam"] # change dataset name here
       BATCHSIZE_PER_REPLICA: 256
       LABEL_TYPE: sample_index    # just an implementation detail. Label isn't used
       TRANSFORMS:
@@ -36,7 +36,6 @@ config:
       COLLATE_FUNCTION: false_collator
       MMAP_MODE: True
       COPY_TO_LOCAL_DISK: False
-      DATA_LIMIT: 13824
       DROP_LAST: True
       COPY_DESTINATION_DIR: "/tmp/imagenet1k"
   TRAINER:
