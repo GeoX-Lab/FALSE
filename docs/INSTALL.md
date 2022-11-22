@@ -78,3 +78,19 @@ move to [dataset_catalog.json](../configs/config/dataset_catalog.json) and add (
         "val":["SegmentationImage/potsdam/ssl_val"," "]
     }
 }
+```
+3. Data Set and Training
+
+a) 1. Move to [false_1gpu_resnet.yaml](../configs/config/pretrain/FALSE/false_1gpu_resnet.yaml) and change DATASET_NAMES to (e.g. Potsdam):
+```
+DATASET_NAMES: ["potsdam"] # change dataset name here
+```
+2. Training
+```
+python tools/run_distributed_engines.py config=pretrain/FALSE/false_1gpu_resnet.yaml
+```
+b) Execute directly without modifying the configuration file:
+```
+python tools/run_distributed_engines.py config=pretrain/FALSE/false_1gpu_resnet.yaml \
+config.DATA.TRAIN.DATASET_NAMES=["potsdam"]
+```
