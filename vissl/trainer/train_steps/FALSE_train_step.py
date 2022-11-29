@@ -89,7 +89,6 @@ def construct_sample_for_model(batch_data, task):
 
     return sample
 
-# 8.当训练名称为standard_train_step时，进入该函数
 @register_train_step("FALSE_train_step")
 def FALSE_train_step(task):
     """

@@ -158,16 +158,16 @@ class FALSECriterion(nn.Module):
             diff_sim[pos_idx,pos_idx]=3 
             if pos_idx<int(batch_size/2):
                 diff_sim[pos_idx,pos_idx+int(batch_size/2)]=3 
-        want_idx=torch.where(diff_sim==torch.min(diff_sim)) 
-        for zzy_control in range(len(want_idx[0])):
-            anchor_n=want_idx[0][zzy_control]
-            m_neg_n=want_idx[1][zzy_control]
+        select_pair=torch.where(diff_sim==torch.min(diff_sim)) 
+        for pair in range(len(select_pair[0])):
+            anchor_n=select_pair[0][pair]
+            m_neg_n=select_pair[1][pair]
             cos_pos_sim=torch.log(pos_sim[anchor_n])*T
             if cos_pos_sim>=self.positive_threshold:
                 if all_pos[anchor_n,m_neg_n]==0:
-                    all_pos[anchor_n,m_neg_n]=self.confidence_weight*all_neg[anchor_n,m_neg_n]
+                    all_pos[anchor_n,m_neg_n]=self.confidence_weight*all_neg[anchor_n,m_neg_n] #  S_EP(enhanced positive signal)
                 if all_neg[anchor_n,m_neg_n]!=0:
-                    all_neg[anchor_n,m_neg_n]=(1-self.confidence_weight)*all_neg[anchor_n,m_neg_n]
+                    all_neg[anchor_n,m_neg_n]=(1-self.confidence_weight)*all_neg[anchor_n,m_neg_n] # S_WN(weaken negative signal)
     
         pos=torch.sum(all_pos,1)
         neg=torch.sum(all_neg,1)
