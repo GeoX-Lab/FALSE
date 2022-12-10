@@ -1,5 +1,5 @@
 _base_ = [
-    '../_base_/models/deeplabv3plus_r50-d8.py', '../_base_/datasets/ade20k.py',
+    '../_base_/models/false_segmodel.py', '../_base_/datasets/segmentation_data.py',
     '../_base_/default_runtime.py', '../_base_/schedules/schedule_1300.py'
 ]
 # potsdam example:
