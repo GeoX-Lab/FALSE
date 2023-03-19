@@ -5,7 +5,7 @@
 <img src="FALSE.gif" width="900"/>
 
 This is a PyTorch implementation of the [FALSE](https://ieeexplore.ieee.org/document/9954056)
-> arXiv preprint: [arXiV 2211.07928](https://arxiv.org/abs/2211.07928)
+> The document can be visited at https://ieeexplore.ieee.org/abstract/document/9954056 or arXiv preprint: [arXiV 2211.07928](https://arxiv.org/abs/2211.07928).
 
 ## Abstract
 
