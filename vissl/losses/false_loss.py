@@ -147,18 +147,20 @@ class FALSECriterion(nn.Module):
         all_pos=similarity * self.pos_mask
         all_neg=similarity * self.neg_mask
 
-        pos_sim=(torch.zeros((batch_size,1))-2).cuda() 
-        diff_sim=(torch.zeros((batch_size,batch_size))+3).cuda()
-        for pos_idx in range(batch_size):
-            if pos_idx>=int(batch_size/2):
-                pos_sim[pos_idx]=similarity[pos_idx,pos_idx-int(batch_size/2)]
+        r=similarity.shape[0]
+        c=similarity.shape[1]
+        pos_sim=(torch.zeros((r,1))-2).cuda() 
+        diff_sim=(torch.zeros((r,c))+3).cuda()
+        for pos_idx in range(r):
+            if pos_idx>=int(r/2):
+                pos_sim[pos_idx]=similarity[pos_idx,pos_idx-int(c/2)]
             else:
-                pos_sim[pos_idx]=similarity[pos_idx,pos_idx+int(batch_size/2)] 
+                pos_sim[pos_idx]=similarity[pos_idx,pos_idx+int(c/2)] 
             diff_sim[pos_idx,pos_idx:]=torch.abs(similarity[pos_idx,pos_idx:]-pos_sim[pos_idx])
             diff_sim[pos_idx,pos_idx]=3 
-            if pos_idx<int(batch_size/2):
-                diff_sim[pos_idx,pos_idx+int(batch_size/2)]=3 
-        select_pair=torch.where(diff_sim==torch.min(diff_sim)) 
+            if pos_idx<int(r/2):
+                diff_sim[pos_idx,pos_idx+int(c/2)]=3 
+        select_pair=torch.where(diff_sim==torch.min(diff_sim))
         for pair in range(len(select_pair[0])):
             anchor_n=select_pair[0][pair]
             m_neg_n=select_pair[1][pair]
