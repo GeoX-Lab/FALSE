@@ -319,13 +319,7 @@ class GenericSSLDataset(VisslDatasetBase):
             if not self._subset_initialized:
                 self._init_image_and_label_subset()
             subset_idx = self.image_and_label_subset[idx]
-
-        # 20220724保存影像乱序的方式
-        # 变量在数据下载过程中丢失，保存至文件
-        # 当文件不存在时，保存
-        save_file='/media/csu/ZL/HNP_NewWork/test/model_dglc_see0915_4.npy'
-        if os.path.exists(save_file)==False:
-            np.save(save_file,self.image_and_label_subset)
+      
         # TODO: this doesn't yet handle the case where the length of datasets
         # could be different.
         item = {"data": [], "data_valid": [], "data_idx": []}

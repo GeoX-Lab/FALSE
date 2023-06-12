@@ -173,37 +173,14 @@ class SSLTransformsWrapper(ClassyTransform):
             output = self.transform(sample["data"])
             sample["data"] = output
         else:
-            for idx in indices:
-                #print(idx)
-                # 加入的代码：-----------------------------------------------------
-                # 共有的数据增强：
-                # ImgReplicatePil 复制影像，不改变空间结构
-                # ->RandomResizedCrop # 随机裁剪resizecrop，改变空间结构，我们修改了RandomResizedCrop的源码，使其可以返回裁剪参数
-                # ->RandomHorizontalFlip # 随机水平翻转，改变空间结构，水平翻转, 我们修改了RandomHorizontalFlip的源码，使其可以返回是否水平翻转的参数
-                # ImgPilColorDistortion # 随机颜色失真，不改变空间结构
-                # ImgPilGaussianBlur # 高斯模糊，不改变空间结构
-                if self.name=='RandomResizedCrop':
-                    output,top,left,height,width = self.transform(sample["data"][idx]) # 
-                elif self.name=='RandomHorizontalFlip':
-                    output,isFlip = self.transform(sample["data"][idx]) #
-                else:
-                    output = self.transform(sample["data"][idx]) # 原始代码 
-                
+            for idx in indices:                
+                output = self.transform(sample["data"][idx])
                 
                 if self._is_transform_with_labels():
                     sample["data"][idx] = output[0]
                     sample["label"][-1] = output[1]
                 else:
                     sample["data"][idx] = output
-                    # 我们计划把空间变换的两个参数加入到sample中：
-                    # sample["interest_box"][idx]=[0,0,224,224]
-                    # sample["randomresizecrop_param"][idx]=[0,0,224,224]
-                    # if self.name=='RandomResizedCrop':
-                    #     sample["randomresizecrop_param"][idx]=[top,left,height,width]
-                    #       # 我们的方法是在resize之后进行裁剪，弥补使用我们方法参数的缺失
-                    # elif self.name=='RandomHorizontalFlip':
-                    #     sample["randomhorizontalflip"][idx]=isFlip
-                # 以上为加入的代码----------------------------------------------------------
 
         if self._is_transform_with_copies():
             # if the transform makes copies of the data, we just flatten the list
