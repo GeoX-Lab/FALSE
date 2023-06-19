@@ -20,6 +20,8 @@ conda activate false_env
 ```
 conda install pytorch==1.9.0 torchvision==0.10.0 cudatoolkit=11.1 -c pytorch
 ```
+Or Visit [Pytorch](https://pytorch.org/) to install
+
 3. Install Apex(optional)
 ```
 git clone --recursive https://www.github.com/NVIDIA/apex
@@ -27,6 +29,9 @@ cd apex
 python3 setup.py install
 ```
 4. Install FALSE
+
+Download FALSE source code and switch to the source path for installation:
+
 ```
 git clone --recursive https://github.com/GeoX-Lab/FALSE.git
 cd FALSE
@@ -35,9 +40,11 @@ pip install classy-vision@https://github.com/facebookresearch/ClassyVision/tarba
 pip install -e .[dev]
 ```
 
-## Data Preparetion
+## Data Preparetion and Training
 
 1. Prepare Data, e.g.,
+
+(The data is organized with ImageNet style)
 ```
 SegmentationImage
 |_ <potsdam>
@@ -79,13 +86,15 @@ move to [dataset_catalog.json](../configs/config/dataset_catalog.json) and add (
     }
 }
 ```
-3. Data Set and Training
+3. Data Set
 
-a) 1. Move to [false_1gpu_resnet.yaml](../configs/config/pretrain/FALSE/false_1gpu_resnet.yaml) and change DATASET_NAMES to (e.g. Potsdam):
+There are two ways to set data config:
+
+a) Move to [false_1gpu_resnet.yaml](../configs/config/pretrain/FALSE/false_1gpu_resnet.yaml) and change DATASET_NAMES to (e.g. Potsdam):
 ```
 DATASET_NAMES: ["potsdam"] # change dataset name here
 ```
-2. Training
+and training with this config ([false_1gpu_resnet.yaml](../configs/config/pretrain/FALSE/false_1gpu_resnet.yaml))
 ```
 python tools/run_distributed_engines.py config=pretrain/FALSE/false_1gpu_resnet.yaml
 ```
@@ -94,3 +103,7 @@ b) Execute directly without modifying the configuration file:
 python tools/run_distributed_engines.py config=pretrain/FALSE/false_1gpu_resnet.yaml \
 config.DATA.TRAIN.DATASET_NAMES=["potsdam"]
 ```
+
+4. Other Config
+
+All settings of FALSE can be set in [false_1gpu_resnet.yaml](../configs/config/pretrain/FALSE/false_1gpu_resnet.yaml), including data augumentation, training epoch, optimizer, adn hyperparameters, etc.
