@@ -2,8 +2,6 @@
 
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
-
-from cProfile import label
 import gc
 import logging
 import os
@@ -30,10 +28,6 @@ from vissl.trainer.train_steps import get_train_step
 from vissl.utils.distributed_utils import all_gather_heterogeneous, all_gather_sizes
 from vissl.utils.env import get_machine_local_and_dist_rank
 from vissl.utils.io import save_file
-
-import PIL.Image as Image 
-import torchvision.transforms as transforms
-import matplotlib.pyplot as plt
 
 def build_task(config):
     """Builds a ClassyTask from a config.
@@ -145,7 +139,7 @@ class SelfSupervisionTrainer(object):
                 dist.all_reduce(torch.zeros(1).cuda())
         else:
             set_cpu_device()
-    # 7. 构造完成自监督训练类之后，调用该函数进行训练
+    
     def train(self):
         """
         The train workflow. We get the training loop to use (vissl default is
@@ -162,7 +156,7 @@ class SelfSupervisionTrainer(object):
         4. At the end of epoch, sync meters and execute hooks at the end of phase. Involves
            things like checkpointing model, logging timers, logging to tensorboard etc
         """
-        # 这里主要是支持不同的训练流程，对train_step_name进行判断，一般是进入standard_train_step
+
         train_step_fn = get_train_step(self.cfg["TRAINER"]["TRAIN_STEP_NAME"])
         self.task.prepare(pin_memory=self.cfg.DATA.PIN_MEMORY)
         self.task.init_distributed_data_parallel_model()
@@ -179,22 +173,9 @@ class SelfSupervisionTrainer(object):
             logging.info("Loss is: {}".format(task.loss))
         logging.info("Starting training....")
 
-        #fig, ax = plt.subplots()
-        # fig1, ax1 = plt.subplots()
-        # x = []
-        # y = []
-        # y2=[]
-        # y3=[]
-
-        # fig2, ax2 = plt.subplots()
-        # y4=[]
-        # y5=[]
         while phase_idx + 1 < len(task.phases):
-            #zzy=len(task.phases)
-            # 初始的phase_idx和iteration_num为-1
             self._advance_phase(task)  # advances task.phase_idx
 
-            # 影像列表
             phase_idx += 1
             iteration_num += 1
             task.local_iteration_num = iteration_num  # iteration_num=0 at this step
@@ -210,47 +191,9 @@ class SelfSupervisionTrainer(object):
                         torch.cuda.empty_cache()
                         logging.info("CUDA cache cleared")
                     
-                    #task,mean_object_num,mean_object_num_resize = train_step_fn(task) # 这里直接进入定义的训练步骤
-                    #task,mean_fciou,min_fciou,max_fciou,num_high,num_low= train_step_fn(task) # 这里直接进入定义的训练步骤
-                    task= train_step_fn(task) # 这里直接进入定义的训练步骤
+                    task= train_step_fn(task) 
                     iteration_num += 1
                     task.local_iteration_num = iteration_num
-                    
-                    # x.append(iteration_num)
-                    # y.append(mean_object_num)
-            
-                    # # y2.append(mean_object_num_resize)
-                    # y.append(mean_fciou)
-                    # y2.append(min_fciou)
-                    # y3.append(max_fciou)
-                    # ax1.cla() # clear plot
-                    # # ax.cla()
-                    # # fig.suptitle("object num")
-                    # fig1.suptitle("positive alignment")
-                    # # ax.plot(x, y, 'r.-', lw=1,label='ours') # draw line chart
-                    # # ax.plot(x, y2, 'b.-', lw=1,label='resize') # draw line chart
-                    # ax1.plot(x, y, 'r.-', lw=1,label='mean_fciou') # draw line chart
-                    # ax1.plot(x, y2, 'b.-', lw=1,label='min_fciou') # draw line chart
-                    # ax1.plot(x, y3, 'y.-', lw=1,label='max_fciou') # draw line chart
-                    # ax1.set_xlabel('iter')
-                    # ax1.set_ylabel('fc-iou')
-                    # plt.legend()
-                    # plt.pause(0.1)
-
-                    # y4.append(num_high)
-                    # y5.append(num_low)
-                    # ax2.cla() # clear plot
-                    # fig2.suptitle("positive alignment (num analysis)")
-                    # # ax.plot(x, y, 'r.-', lw=1,label='randomresizecrop') # draw line chart
-                    # #ax.plot(x, y2, 'b.-', lw=1,label='resize') # draw line chart
-                    # ax2.plot(x, y4, 'r.-', lw=1,label='fciou_high_num') # draw line chart
-                    # ax2.plot(x, y5, 'b.-', lw=1,label='fciou_low_num') # draw line chart
-                    # ax2.set_xlabel('iter')
-                    # ax2.set_ylabel('fc-iou')
-                    # plt.legend()
-                    # plt.pause(0.1)
-
-
 
                     task.run_hooks(SSLClassyHookFunctions.on_step.name)
 

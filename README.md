@@ -4,7 +4,8 @@
 
 <img src="FALSE.gif" width="900"/>
 
-This is a PyTorch implementation of the the paper titled [False: False Negative Samples Aware Contrastive Learning for Semantic Segmentation of High-Resolution Remote Sensing Image](https://ieeexplore.ieee.org/document/9954056) published at IEEE Geoscience and Remote Sensing Letters.
+This is a PyTorch implementation of the paper titled [False: False Negative Samples Aware Contrastive Learning for Semantic Segmentation of High-Resolution Remote Sensing Image](https://ieeexplore.ieee.org/document/9954056) published at IEEE Geoscience and Remote Sensing Letters.
+
 > The document can be visited at https://ieeexplore.ieee.org/abstract/document/9954056 or arXiv preprint: [arXiV 2211.07928](https://arxiv.org/abs/2211.07928).
 
 ## Abstract
